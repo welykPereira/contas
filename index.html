@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Contas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#F2F2F7"/>
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <h1>Minhas Contas</h1>
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+        </div>
+        <div class="dashboard">
+            <div>
+                <span>Salário/Renda</span>
+                <strong id="display-salario">R$ 0,00</strong>
+            </div>
+            <div>
+                <span>Pendente</span>
+                <strong id="display-total-a-pagar">R$ 0,00</strong>
+            </div>
+            <div>
+                <span>Balanço</span>
+                <strong id="display-balanco">R$ 0,00</strong>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="acoes">
+            <button id="btn-nova-conta">Nova Conta</button>
+            <button id="btn-gerenciar-salario">Definir Salário</button>
+            <button id="btn-gerenciar-categorias">Categorias</button>
+        </div>
+
+        <div class="filtro-contas">
+            <select id="filtro-categoria">
+                <option value="todas">Todas as Categorias</option>
+            </select>
+            <select id="filtro-status">
+                <option value="todas">Todos os Status</option>
+                <option value="pendente">Pendente</option>
+                <option value="paga">Paga</option>
+            </select>
+        </div>
+
+        <div id="lista-contas">
+            </div>
+    </main>
+
+    <div id="modal-conta" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-conta-titulo">Nova Conta</h2>
+            <form id="form-conta">
+                <input type="hidden" id="conta-id">
+                <input type="text" id="conta-nome" placeholder="Nome da conta (ex: Aluguel)" required>
+                <input type="number" id="conta-valor" placeholder="Valor" step="0.01" required>
+                <input type="date" id="conta-vencimento" required>
+                <select id="conta-categoria" required>
+                    <option value="">Selecione uma categoria</option>
+                </select>
+                <label for="conta-logo">Logo da Empresa (Opcional)</label>
+                <input type="file" id="conta-logo" accept="image/*">
+                <img id="logo-preview" src="" alt="Prévia da logo">
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-categorias" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Gerenciar Categorias</h2>
+            <form id="form-nova-categoria">
+                <input type="text" id="nova-categoria-nome" placeholder="Nome da nova categoria" required>
+                <button type="submit">Adicionar</button>
+            </form>
+            <ul id="lista-categorias"></ul>
+        </div>
+    </div>
+    
+    <div id="modal-salario" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Definir Salário/Renda Mensal</h2>
+            <form id="form-salario">
+                <input type="number" id="salario-valor" placeholder="Valor total da renda" step="0.01" required>
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

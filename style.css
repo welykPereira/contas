@@ -1,0 +1,146 @@
+/* Importando uma fonte bonita do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* --- VARIÁVEIS DE COR --- */
+:root {
+    /* Paleta Light (Padrão) */
+    --primary-color: #007AFF;
+    --success-color: #34C759;
+    --danger-color: #FF3B30;
+    --bg-color: #F2F2F7;
+    --card-bg-color: #FFFFFF;
+    --text-color: #1D1D1F;
+    --text-color-secondary: #6E6E73;
+    --border-color: #E5E5EA;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+body.dark-mode {
+    /* Paleta Dark */
+    --primary-color: #0A84FF;
+    --success-color: #30D158;
+    --danger-color: #FF453A;
+    --bg-color: #000000;
+    --card-bg-color: #1C1C1E;
+    --text-color: #F2F2F7;
+    --text-color-secondary: #8E8E93;
+    --border-color: #38383A;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* --- ESTILOS GERAIS --- */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* --- CABEÇALHO E DASHBOARD --- */
+header {
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+    padding: 1rem;
+    padding-bottom: 6rem;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.header-top { display: flex; justify-content: space-between; align-items: center; max-width: 800px; margin: 0 auto; }
+header h1 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+
+.dashboard {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 20px; box-shadow: var(--shadow);
+    position: absolute; width: 90%; max-width: 800px; left: 50%; bottom: -4.5rem; transform: translateX(-50%);
+}
+
+body.dark-mode .dashboard { background: rgba(44, 44, 46, 0.7); }
+.dashboard div { text-align: center; }
+.dashboard span { font-size: 0.8rem; font-weight: 400; color: var(--text-color-secondary); }
+.dashboard strong { display: block; font-size: 1.3rem; font-weight: 600; }
+
+/* --- ÁREA PRINCIPAL --- */
+main { padding: 1rem; padding-top: 6rem; max-width: 800px; margin: 0 auto; }
+.acoes, .filtro-contas { display: flex; justify-content: center; gap: 10px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+button { padding: 12px 20px; border: none; border-radius: 12px; background-color: var(--primary-color); color: white; font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.2s, background-color 0.3s; }
+button:hover { transform: translateY(-2px); }
+select { background-color: var(--card-bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 10px 15px; border-radius: 12px; font-family: 'Poppins', sans-serif; }
+
+/* --- CARD DE CONTA --- */
+#lista-contas { display: grid; gap: 1rem; }
+.conta-card {
+    background-color: var(--card-bg-color); border-radius: 16px; box-shadow: var(--shadow); padding: 1rem 1.25rem;
+    display: grid; align-items: center; grid-template-columns: 50px 1fr auto; gap: 0 1rem;
+    border-left: 5px solid var(--primary-color); transition: all 0.2s ease-in-out;
+}
+.conta-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+
+.card-col-logo { grid-column: 1; align-self: center; }
+.logo-empresa { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; background-color: var(--border-color); }
+.card-col-info { grid-column: 2; align-self: center; }
+.card-col-info h3 { margin: 0; font-size: 1.1rem; font-weight: 600; line-height: 1.2; }
+.card-col-info p.data-vencimento { margin: 8px 0 0; font-size: 0.85rem; color: var(--text-color-secondary); }
+.categoria-info { display: flex; align-items: center; gap: 6px; margin-top: 5px; }
+.categoria-info svg { width: 14px; height: 14px; stroke: var(--text-color-secondary); opacity: 0.8; }
+.categoria-info span { font-size: 0.85rem; color: var(--text-color-secondary); }
+.card-col-valor { grid-column: 3; text-align: right; align-self: center; }
+.conta-valor { font-size: 1.3rem; font-weight: 600; color: var(--text-color); margin-bottom: 5px; }
+.conta-acoes { display: flex; justify-content: flex-end; gap: 8px; }
+
+.conta-card.paga { border-left-color: var(--success-color); }
+.conta-card.paga .card-col-info h3, .conta-card.paga .conta-valor { text-decoration: line-through; color: var(--text-color-secondary); }
+.conta-card.vencida { border-left-color: var(--danger-color); }
+.conta-card.vencida .data-vencimento { color: var(--danger-color); font-weight: 600; }
+
+.conta-acoes button { background: none; padding: 5px; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
+.conta-acoes button:hover { background-color: var(--border-color); }
+.conta-acoes svg { width: 18px; height: 18px; stroke: var(--text-color-secondary); }
+.btn-pagar svg { stroke: var(--success-color); }
+.btn-editar svg { stroke: var(--primary-color); }
+.btn-apagar svg { stroke: var(--danger-color); }
+
+.empty-state { text-align: center; padding: 3rem 1rem; background-color: var(--card-bg-color); border-radius: 16px; box-shadow: var(--shadow); }
+.empty-state svg { width: 80px; height: 80px; opacity: 0.5; margin-bottom: 1rem; }
+.empty-state p { font-size: 1.1rem; color: var(--text-color-secondary); margin-bottom: 1.5rem; }
+
+/* --- ESTILOS DE MODAL --- */
+.modal {
+    position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6);
+    opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+.modal.show { opacity: 1; visibility: visible; transition: opacity 0.3s ease, visibility 0s 0s; }
+.modal-content {
+    background-color: var(--card-bg-color); margin: 15% auto; padding: 25px; border: 1px solid var(--border-color);
+    width: 90%; max-width: 500px; border-radius: 16px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: scale(0.95); transition: transform 0.3s ease;
+}
+.modal.show .modal-content { transform: scale(1); }
+.close-btn { color: #aaa; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
+#form-conta input, #form-conta select, #form-nova-categoria input, #form-salario input { background-color: var(--bg-color); color: var(--text-color); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; font-size: 1rem; }
+#logo-preview { max-width: 100px; max-height: 100px; margin-top: 10px; display: none; }
+
+/* --- SELETOR DE TEMA --- */
+.theme-switch-wrapper { display: flex; align-items: center; }
+.theme-switch { display: inline-block; height: 28px; position: relative; width: 50px; }
+.theme-switch input { display:none; }
+.slider { background-color: #ccc; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; }
+.slider:before { background-color: #fff; bottom: 4px; content: ""; height: 20px; left: 4px; position: absolute; transition: .4s; width: 20px; border-radius: 50%; }
+input:checked + .slider { background-color: var(--primary-color); }
+input:checked + .slider:before { transform: translateX(22px); }
+
+/* --- LISTA DE CATEGORIAS NO MODAL --- */
+#form-nova-categoria { display: flex; gap: 10px; }
+#form-nova-categoria input { flex-grow: 1; }
+#lista-categorias { list-style: none; padding: 0; margin-top: 1.5rem; }
+#lista-categorias li { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px; border-bottom: 1px solid var(--border-color); }
+.categoria-item { display: flex; align-items: center; gap: 10px; }
+.categoria-item svg { width: 20px; height: 20px; stroke: var(--primary-color); }
+.btn-excluir-cat { background: transparent; border: 1px solid var(--danger-color); color: var(--danger-color); border-radius: 8px; padding: 4px 10px; font-size: 0.8rem; font-weight: 500; }
+.btn-excluir-cat:hover { background: var(--danger-color); color: white; }
