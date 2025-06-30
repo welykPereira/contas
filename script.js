@@ -1,3 +1,5 @@
+// script.js (Versão Completa, Final e Corrigida)
+
 document.addEventListener('DOMContentLoaded', () => {
     // --- LÓGICA DO TEMA DARK/LIGHT ---
     const themeSwitch = document.getElementById('checkbox');
@@ -43,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let contaEmEdicao = null;
     let logoBase64 = null;
     
-    // --- FUNÇÕES AUXILIARES ---
     const formatarMoeda = (valor) => valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     const salvarDados = () => {
         localStorage.setItem('contas', JSON.stringify(contas));
@@ -51,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('salario', JSON.stringify(salario));
     };
 
-    // --- FUNÇÕES DE ABERTURA DOS MODAIS ---
     function abrirModalConta(conta = null) {
         formConta.reset();
         logoBase64 = null;
@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function abrirModalCategorias() { modalCategorias.classList.add('show'); }
     function abrirModalSalario() { document.getElementById('salario-valor').value = salario > 0 ? salario : ''; modalSalario.classList.add('show'); }
 
-    // --- FUNÇÕES DE RENDERIZAÇÃO ---
     const atualizarDashboard = () => {
         const totalAPagar = contas.filter(c => c.status === 'pendente').reduce((acc, conta) => acc + conta.valor, 0);
         const balanco = salario - totalAPagar;
@@ -115,22 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const iconEditar = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`;
             const iconApagar = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`;
 
-            card.innerHTML = `
-                <div class="card-col-logo"><img src="${logoSrc}" alt="Logo" class="logo-empresa"></div>
-                <div class="card-col-info">
-                    <h3>${conta.nome}</h3>
-                    <div class="categoria-info">${categoriaObj.icone}<span>${categoriaObj.nome}</span></div>
-                    <p class="data-vencimento">Vence: ${new Date(conta.vencimento).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}</p>
-                </div>
-                <div class="card-col-valor">
-                    <div class="conta-valor">${formatarMoeda(conta.valor)}</div>
-                    <div class="conta-acoes">
-                        <button class="btn-pagar" title="${conta.status === 'paga' ? 'Marcar como Pendente' : 'Marcar como Paga'}" data-id="${conta.id}">${conta.status === 'paga' ? iconPendente : iconPaga}</button>
-                        <button class="btn-editar" title="Editar Conta" data-id="${conta.id}">${iconEditar}</button>
-                        <button class="btn-apagar" title="Apagar Conta" data-id="${conta.id}">${iconApagar}</button>
-                    </div>
-                </div>
-            `;
+            card.innerHTML = `<div class="card-col-logo"><img src="${logoSrc}" alt="Logo" class="logo-empresa"></div><div class="card-col-info"><h3>${conta.nome}</h3><div class="categoria-info">${categoriaObj.icone}<span>${categoriaObj.nome}</span></div><p class="data-vencimento">Vence: ${new Date(conta.vencimento).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}</p></div><div class="card-col-valor"><div class="conta-valor">${formatarMoeda(conta.valor)}</div><div class="conta-acoes"><button class="btn-pagar" title="${conta.status === 'paga' ? 'Marcar como Pendente' : 'Marcar como Paga'}" data-id="${conta.id}">${conta.status === 'paga' ? iconPendente : iconPaga}</button><button class="btn-editar" title="Editar Conta" data-id="${conta.id}">${iconEditar}</button><button class="btn-apagar" title="Apagar Conta" data-id="${conta.id}">${iconApagar}</button></div></div>`;
             listaContasEl.appendChild(card);
         });
         atualizarDashboard();
@@ -152,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
     
-    // --- MANIPULADORES DE EVENTOS ---
     document.body.addEventListener('click', (e) => {
         const targetId = e.target.closest('button')?.id;
         if (targetId === 'btn-nova-conta' || targetId === 'btn-nova-conta-empty') abrirModalConta();
@@ -195,9 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isNaN(id)) return;
         const conta = contas.find(c => c.id === id);
         if (!conta) return;
-
         if (button.classList.contains('btn-pagar')) conta.status = conta.status === 'paga' ? 'pendente' : 'paga';
-        else if (button.classList.contains('btn-apagar')) { if (confirm('Tem certeza que deseja apagar esta conta?')) contas = contas.filter(c => c.id !== id); }
+        else if (button.classList.contains('btn-apagar')) { if (confirm('Tem certeza?')) contas = contas.filter(c => c.id !== id); }
         else if (button.classList.contains('btn-editar')) { abrirModalConta(conta); return; }
         salvarDados();
         renderizarContas();
@@ -208,7 +190,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (button) {
             const catIdParaExcluir = button.dataset.id;
             if (contas.some(c => c.categoria === catIdParaExcluir)) { alert('Não é possível excluir uma categoria em uso.'); return; }
-            if (confirm('Tem certeza que deseja excluir esta categoria?')) { categorias = categorias.filter(cat => cat.id !== catIdParaExcluir); salvarDados(); renderizarCategorias(); }
+            if (confirm('Tem certeza?')) { categorias = categorias.filter(cat => cat.id !== catIdParaExcluir); salvarDados(); renderizarCategorias(); }
         }
     });
 
@@ -223,14 +205,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // --- INICIALIZAÇÃO ---
     renderizarCategorias();
     renderizarContas();
 });
 
-// --- REGISTRO DO SERVICE WORKER ---
+// --- REGISTRO DO SERVICE WORKER (COM O CAMINHO CORRETO) ---
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').then(registration => { console.log('SW ok:', registration.scope); }, err => { console.error('SW falhou:', err); });
+    navigator.serviceWorker.register('./sw.js') // <-- O PONTO "." AQUI É A CORREÇÃO CRÍTICA
+      .then(registration => { 
+        console.log('SW ok:', registration.scope); 
+      }, err => { 
+        console.error('SW falhou:', err); 
+      });
   });
 }
